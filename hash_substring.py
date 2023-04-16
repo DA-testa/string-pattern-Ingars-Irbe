@@ -3,16 +3,21 @@ B = 13
 Q = 256
 
 def read_input():
-    text = input("I vai F: ")
+    text = input()
     if "I" in text[:1]:
-        P = input("Pattern: ").rstrip()
-        T = input("Text: ").rstrip()
+        P = input().rstrip()
+        T = input().rstrip()
     elif "F" in text[:1]:
-        filename = "test/" + input("Fails: ")
+        filename = "tests/06"
         file = open(filename, "r")
-        P = file.readline()
-        T = file.readline()
-    return (P, T)
+        P = file.readline().rstrip()
+        T = file.readline().rstrip()
+
+    if 1 <= len(P) <= len(T) <= 5*10**5:
+        return (P, T)
+    else:
+        print("Wrong input")
+        exit()
 
 def get_hash(pattern: str) -> int:
     global B, Q
@@ -35,9 +40,9 @@ def get_occurrences(pattern, text):
 
     for i in range(text_len - pattern_len + 1):
         text_hesh = get_hash(text[i:i + pattern_len])
-
         if pattern_hesh == text_hesh:
-            answer.append(i)
+            if pattern == text[i:i + pattern_len]:
+                answer.append(i)
 
     return answer
 
